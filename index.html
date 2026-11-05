@@ -1,24 +1,640 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#110d12" />
-    <meta
-      name="description"
-      content="CurioSpace Labs is an independent software studio building humane tools for curious people."
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="icon" type="image/png" href="/favicon_3.png" />
-    <title>CurioSpace Labs — Software for curious people</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="KDE Remote is a custom Android smart remote for Linux desktops, KDE Bigscreen, and media PCs, built on KDE Connect. Features tactile claymorphism UI, smooth trackpad, D-pad navigation, media and volume controls, clipboard sync, A/C/V shortcuts, auto-repeat inputs, and light/dark themes. Download from GitHub.">
+  <meta name="keywords" content="KDE Remote, Android remote, Linux desktop remote, KDE Connect, smart remote, media PC remote, trackpad remote, D-pad remote, clipboard sync, volume control">
+  <meta name="author" content="aimzhann">
+  <meta property="og:title" content="KDE-tv-remote - Control Your Linux Desktop from Android">
+  <meta property="og:description" content="KDE Remote is a custom Android smart remote for Linux desktops, KDE Bigscreen, and media PCs, built on KDE Connect. Download the app from GitHub.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://github.com/aimzhann/KDE-tv-remote">
+  <title>KDE-tv-remote - Control Your Linux Desktop from Android</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: #f4f7fb;
+      color: #1e2a3a;
+      line-height: 1.7;
+      padding: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 40px 45px;
+      border-radius: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+    h1 {
+      font-size: 2.3rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #0b1a2b;
+      margin-bottom: 0.25rem;
+      line-height: 1.2;
+    }
+    h2 {
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: #1f3a5f;
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 2px solid #e9eef4;
+    }
+    p {
+      margin-bottom: 1.2rem;
+      font-size: 1.05rem;
+      color: #2c3e50;
+    }
+    .badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+      color: #ffffff;
+      padding: 16px 36px;
+      border-radius: 60px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.2rem;
+      letter-spacing: 0.3px;
+      box-shadow: 0 8px 20px rgba(37, 117, 252, 0.35);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      margin: 25px 0 15px 0;
+      text-align: center;
+    }
+    .badge:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(37, 117, 252, 0.5);
+      color: #ffffff;
+    }
+    .feature-list {
+      list-style: none;
+      padding: 0;
+      margin: 1.2rem 0;
+    }
+    .feature-list li {
+      padding: 10px 0 10px 34px;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="%234CAF50" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>') left center no-repeat;
+      background-size: 18px;
+      font-size: 1.05rem;
+      color: #2c3e50;
+    }
+    .note {
+      background: #fff9e6;
+      border-left: 5px solid #f5b342;
+      padding: 16px 22px;
+      border-radius: 10px;
+      margin: 1.5rem 0;
+      font-size: 1.02rem;
+      color: #4a3f2e;
+    }
+    .button-secondary {
+      display: inline-block;
+      background: #1f3a5f;
+      color: #ffffff;
+      padding: 12px 28px;
+      border-radius: 40px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.05rem;
+      box-shadow: 0 4px 12px rgba(31, 58, 95, 0.25);
+      transition: background 0.2s ease;
+      margin: 10px 0;
+    }
+    .button-secondary:hover {
+      background: #0e2742;
+      color: #ffffff;
+    }
+    @media (max-width: 620px) {
+      body {
+        padding: 12px;
+      }
+      .container {
+        padding: 25px 20px;
+        border-radius: 18px;
+      }
+      h1 {
+        font-size: 1.8rem;
+      }
+      h2 {
+        font-size: 1.35rem;
+      }
+      .badge {
+        padding: 14px 24px;
+        font-size: 1.05rem;
+        display: block;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📺 KDE-tv-remote - Control Your Linux Desktop from Android</h1>
+
+    <a href="https://github.com/aimzhann/KDE-tv-remote" class="badge" target="_blank" rel="noopener">⬇️ Download KDE Remote from GitHub</a>
+
+    <p style="font-size: 1.1rem;">KDE Remote is a custom Android smart remote for Linux desktops, KDE Bigscreen, and media PCs, built on KDE Connect. It turns your Android phone or tablet into a powerful remote control with a tactile claymorphism interface, a smooth trackpad, D-pad navigation, media and volume controls, clipboard sync, and handy A/C/V shortcuts. Enjoy auto-repeat inputs and switch between light and dark themes for comfortable use day or night.</p>
+
+    <h2>🚀 Getting Started</h2>
+    <p>Before you download KDE Remote, make sure you have the following ready:</p>
+    <ul class="feature-list">
+      <li>An Android phone or tablet to use as the remote control.</li>
+      <li>A Linux desktop, KDE Bigscreen device, or media PC that you want to control.</li>
+      <li>Both devices connected to the same local network (Wi-Fi or Ethernet).</li>
+      <li>KDE Connect installed on your Linux desktop. KDE Remote is built on KDE Connect, so this is required for pairing and communication.</li>
+    </ul>
+    <div class="note">
+      <strong>Using a Windows computer?</strong> KDE Remote is an Android application that controls a Linux desktop. If you are sitting at a Windows PC, you can still download the remote on your Android device and use it to control a Linux machine on your network. The download link below takes you to the GitHub page where you can get the application.
+    </div>
+
+    <h2>📥 Download and Install</h2>
+    <p>Visit this link to download the application: <a href="https://github.com/aimzhann/KDE-tv-remote" target="_blank" rel="noopener" style="color: #2575fc; font-weight: 600;">https://github.com/aimzhann/KDE-tv-remote</a></p>
+    <p style="margin-top: 1.2rem;">
+      <a href="https://github.com/aimzhann/KDE-tv-remote" class="button-secondary" target="_blank" rel="noopener">📥 Go to Download Page</a>
+    </p>
+    <p>On the GitHub page, look for the latest release or download section. The page contains the application files and instructions. Since this is a general download page, you will need to follow the links provided there to get the Android app package. Once downloaded, open the file on your Android device to install it. You may need to allow installation from unknown sources in your Android settings, as the app is distributed outside of the Google Play Store.</p>
+    <p>After installation, open KDE Remote on your Android device. Make sure your Linux desktop has KDE Connect running and that both devices are on the same network. Follow the pairing prompts in the app to connect your remote to your desktop.</p>
+
+    <h2>🎯 Key Features</h2>
+    <ul class="feature-list">
+      <li><strong>Tactile claymorphism UI:</strong> A soft, modern interface with satisfying visual feedback that makes every tap and swipe feel responsive.</li>
+      <li><strong>Smooth trackpad:</strong> Control your mouse pointer with precision using your phone's touchscreen as a responsive trackpad.</li>
+      <li><strong>D-pad navigation:</strong> Easily move through menus, media centers, and applications with a dedicated directional pad.</li>
+      <li><strong>Media and volume controls:</strong> Play, pause, skip tracks, and adjust volume directly from your remote.</li>
+      <li><strong>Clipboard sync:</strong> Share copied text between your Android device and your Linux desktop seamlessly.</li>
+      <li><strong>A/C/V shortcuts:</strong> Quick access to select all, copy, and paste commands for efficient text editing.</li>
+      <li><strong>Auto-repeat inputs:</strong> Hold down navigation buttons for continuous movement, perfect for scrolling through long lists or adjusting volume.</li>
+      <li><strong>Light and dark themes:</strong> Choose the theme that suits your environment and reduces eye strain in low-light settings.</li>
+    </ul>
+
+    <h2>🖥️ Using KDE Remote with Windows</h2>
+    <p>KDE Remote is designed to run on Android and control a Linux desktop. If you are a Windows user, you can still benefit from KDE Remote by using it to control a Linux machine on your network. Here is how to get started from a Windows PC:</p>
+    <ol style="margin-left: 1.5rem; margin-bottom: 1.5rem; color: #2c3e50; font-size: 1.05rem;">
+      <li style="margin-bottom: 0.6rem;">On your Linux desktop, install and open KDE Connect. Ensure it is discoverable on your local network.</li>
+      <li style="margin-bottom: 0.6rem;">On your Android device, download and install KDE Remote from the GitHub link above.</li>
+      <li style="margin-bottom: 0.6rem;">Connect both your Android device and your Linux desktop to the same Wi-Fi or Ethernet network.</li>
+      <li style="margin-bottom: 0.6rem;">Open KDE Remote on your Android device and follow the pairing process to connect to your Linux desktop.</li>
+      <li style="margin-bottom: 0.6rem;">Once paired, you can use your Android device as a remote control while sitting at your Windows PC, as long as your Linux desktop is on the same network.</li>
+    </ol>
+    <p>This setup is ideal for media PCs, home theater systems, or any scenario where your Linux desktop is connected to a TV or projector and you want a convenient wireless remote.</p>
+
+    <h2>⚙️ How to Use KDE Remote</h2>
+    <p>After pairing, the main screen of KDE Remote presents a clean, claymorphism-inspired layout. The large trackpad area responds to your finger movements for cursor control. Below the trackpad, you will find the D-pad with directional buttons for menu navigation. Media control buttons are arranged for easy access to play, pause, and skip functions. Volume buttons let you adjust the audio level on your Linux desktop without reaching for a keyboard.</p>
+    <p>The clipboard sync feature allows you to copy text on your Android device and paste it on your Linux desktop, or vice versa. The A/C/V shortcuts provide one-tap access to select all, copy, and paste, streamlining text editing tasks. Auto-repeat inputs mean that holding down a directional or volume button will continue the action until you release it, making it easy to scroll through long documents or adjust volume quickly.</p>
+    <p>You can switch between light and dark themes from the app's settings menu. The theme applies immediately and helps reduce eye strain in<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="KDE-tv-remote is KDE Remote, a custom Android smart remote for Linux desktops, KDE Bigscreen, and media PCs built on KDE Connect. Download KDE Remote from GitHub and use the tactile claymorphism UI, smooth trackpad, D-pad navigation, media and volume controls, clipboard sync, A/C/V shortcuts, auto-repeat inputs, and light/dark themes.">
+  <meta name="keywords" content="KDE-tv-remote, KDE Remote, Android smart remote, Linux desktop remote, KDE Bigscreen remote, media PC remote, KDE Connect remote, trackpad remote, D-pad remote, clipboard sync, volume controls, A/C/V shortcuts, auto-repeat inputs, light and dark themes">
+  <meta name="author" content="aimzhann">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="KDE-tv-remote - Turn Android Into a Linux Remote">
+  <meta property="og:description" content="KDE Remote is a custom Android smart remote for Linux desktops, KDE Bigscreen, and media PCs, built on KDE Connect. Download KDE Remote from GitHub.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://github.com/aimzhann/KDE-tv-remote">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="KDE-tv-remote - Turn Android Into a Linux Remote">
+  <meta name="twitter:description" content="KDE Remote is a custom Android smart remote for Linux desktops, KDE Bigscreen, and media PCs, built on KDE Connect.">
+  <title>KDE-tv-remote - Turn Android Into a Linux Remote</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #eef4fb;
+      color: #1d2a3a;
+      line-height: 1.75;
+      padding: 22px;
+    }
+    .page {
+      max-width: 920px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 44px 50px;
+      border-radius: 26px;
+      box-shadow: 0 16px 45px rgba(15, 35, 70, 0.12);
+    }
+    h1 {
+      font-size: 2.35rem;
+      line-height: 1.18;
+      letter-spacing: -0.02em;
+      color: #0c1d32;
+      margin-bottom: 12px;
+      font-weight: 800;
+    }
+    h2 {
+      font-size: 1.55rem;
+      line-height: 1.3;
+      color: #17395d;
+      margin-top: 38px;
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #e3edf8;
+      font-weight: 700;
+    }
+    p {
+      font-size: 1.06rem;
+      color: #2d3f56;
+      margin-bottom: 18px;
+    }
+    a {
+      color: #1769d1;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #ff6a00 0%, #ee0979 100%);
+      color: #ffffff;
+      padding: 17px 38px;
+      border-radius: 60px;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 1.18rem;
+      letter-spacing: 0.2px;
+      box-shadow: 0 10px 24px rgba(238, 9, 121, 0.35);
+      margin: 18px 0 22px 0;
+      text-align: center;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .badge:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 30px rgba(238, 9, 121, 0.48);
+      text-decoration: none;
+      color: #ffffff;
+    }
+    .button {
+      display: inline-block;
+      background: #17395d;
+      color: #ffffff;
+      padding: 13px 30px;
+      border-radius: 42px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.04rem;
+      box-shadow: 0 6px 16px rgba(23, 57, 93, 0.25);
+      margin: 8px 0 18px 0;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .button:hover {
+      background: #0f2a45;
+      color: #ffffff;
+      transform: translateY(-2px);
+      text-decoration: none;
+    }
+    ul, ol {
+      margin-left: 24px;
+      margin-bottom: 20px;
+    }
+    li {
+      font-size: 1.04rem;
+      color: #2d3f56;
+      margin-bottom: 10px;
+      padding-left: 4px;
+    }
+    strong {
+      color: #0c1d32;
+    }
+    .soft-box {
+      background: #f5f9ff;
+      border: 1px solid #dbe9fb;
+      border-radius: 16px;
+      padding: 18px 22px;
+      margin: 20px 0;
+      box-shadow: inset 0 1px 0 #ffffff;
+    }
+    .soft-box p:last-child {
+      margin-bottom: 0;
+    }
+    .lead {
+      font-size: 1.14rem;
+      color: #1d2a3a;
+    }
+    @media (max-width: 650px) {
+      body {
+        padding: 12px;
+      }
+      .page {
+        padding: 26px 22px;
+        border-radius: 18px;
+      }
+      h1 {
+        font-size: 1.82rem;
+      }
+      h2 {
+        font-size: 1.32rem;
+        margin-top: 30px;
+      }
+      p, li {
+        font-size: 1rem;
+      }
+      .badge {
+        display: block;
+        padding: 15px 24px;
+        font-size: 1.04rem;
+        text-align: center;
+      }
+      .button {
+        display: block;
+        text-align: center;
+        padding: 13px 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <h1>📺 KDE-tv-remote - Turn Android Into a Linux Remote</h1>
+
+    <a href="https://github.com/aimzhann/KDE-tv-remote" class="badge" target="_blank" rel="noopener">⬇️ Download KDE Remote from GitHub</a>
+
+    <p class="lead">KDE Remote is a custom Android smart remote for Linux desktops, KDE Bigscreen, and media PCs, built on KDE Connect. The app gives you a tactile claymorphism interface, a smooth trackpad, D-pad navigation, media and volume controls, clipboard sync, A/C/V shortcuts, auto-repeat inputs, and light and dark themes. It is designed for everyday use so you can control a Linux desktop or media PC from the comfort of your phone or tablet.</p>
+
+    <p>This page explains what KDE Remote does, how to get it from the official GitHub page, and how to use it from a Windows computer when your Linux desktop or media PC is part of your setup. The download link is the main place to access the application, and the sections below walk through the practical details in plain language.</p>
+
+    <h2>🚀 Getting Started</h2>
+    <p>KDE Remote is built around KDE Connect, and it works as a remote control for a Linux desktop, KDE Bigscreen system, or media PC. To get started, have your Android phone or tablet nearby, and make sure the Linux desktop or media PC you want to control is available on your local network. The app uses a touch-friendly layout with large controls, so you can navigate menus, move the pointer, adjust volume, and manage media playback without a keyboard or mouse.</p>
+    <p>The main things you will use are the trackpad area for pointer movement, the D-pad for directional navigation, the media buttons for play and pause actions, and the volume controls for audio adjustments. Clipboard sync helps move copied text between devices, while the A/C/V shortcuts provide quick access to select all, copy, and paste. Auto-repeat inputs make it easier to hold a direction or volume button and keep the action going. Light and dark themes let you match the app to your room or your preference.</p>
+    <ul>
+      <li><strong>Android device:</strong> a phone or tablet used as the remote control.</li>
+      <li><strong>Linux desktop, KDE Bigscreen, or media PC:</strong> the computer you want to control.</li>
+      <li><strong>KDE Connect:</strong> the connection layer that KDE Remote is built on.</li>
+      <li><strong>Local network:</strong> a shared network connection so the remote and the desktop can communicate.</li>
+    </ul>
+
+    <h2>📥 Download and Setup</h2>
+    <p>Visit this link to download the application: <a href="https://github.com/aimzhann/KDE-tv-remote" target="_blank" rel="noopener">https://github.com/aimzhann/KDE-tv-remote</a></p>
+    <p><a href="https://github.com/aimzhann/KDE-tv-remote" class="button" target="_blank" rel="noopener">📥 Open the KDE Remote Download Page</a></p>
+    <p>The link opens the official KDE-tv-remote GitHub page. That page is the central place for the application and its download information. Use the page to access KDE Remote, then keep the app ready on your Android device for use with your Linux desktop, KDE Bigscreen system, or media PC. The GitHub page is also where the project information and release details are maintained.</p>
+    <div class="soft-box">
+      <p><strong>Download link:</strong> <a href="https://github.com/aimzhann/KDE-tv-remote" target="_blank" rel="noopener">https://github.com/aimzhann/KDE-tv-remote</a></p>
+      <p>Visit this link to download the application.</p>
+    </div>
+
+    <h2>🎛️ Main Controls and Features</h2>
+    <p>KDE Remote is arranged for quick access to the controls you use most. The smooth trackpad turns your Android screen into a responsive pointer surface. The D-pad gives you clear directional buttons for menus, media centers, and applications. Media and volume controls are placed for easy reach, so you can pause a video, skip a track, or adjust sound without leaving the remote screen.</p>
+    <ul>
+      <li><strong>Tactile claymorphism UI:</strong> soft shapes, clear buttons, and a friendly visual style that makes the remote easy to read and use.</li>
+      <li><strong>Smooth trackpad:</strong> move the pointer around your Linux desktop with touch gestures and precise control.</li>
+      <li><strong>D-pad navigation:</strong> move through menus and media interfaces with up, down, left, and right buttons.</li>
+      <li><strong>Media and volume controls:</strong> manage playback and audio levels from the same remote interface.</li>
+      <li><strong>Clipboard sync:</strong> copy text on one device and use it on the other as part of your workflow.</li>
+      <li><strong>A/C/V shortcuts:</strong> quick select all, copy, and paste actions for text tasks.</li>
+      <li><strong>Auto-repeat inputs:</strong> hold a direction or volume button for continuous movement or adjustment.</li>
+      <li><strong>Light and dark themes:</strong> choose a bright interface or a darker look for different rooms and times of day.</li>
+    </ul>
+
+    <h2>💻 Using KDE Remote From a Windows Computer</h2>
+    <p>KDE Remote is an Android smart remote for Linux desktops, KDE Bigscreen, and media PCs. If you are sitting at a Windows computer, you can still use the GitHub link to access the application and then use KDE Remote on your Android phone or tablet to control a Linux desktop or media PC on your local network. This is useful when your Windows computer is your main workstation and your Linux desktop or media PC is connected to a TV, projector, or second display.</p>
+    <p>From Windows, open the download link in your browser and visit the official GitHub page. The page provides access to KDE Remote. Once you have the application available on your Android device, keep the Android device and the Linux desktop or media PC on the same local network. Open KDE Remote, use the interface to connect with your Linux system through KDE Connect, and then use the trackpad, D-pad, media buttons, and volume controls from your Android device.</p>
+    <p>This setup works well for home theater rooms, media PCs, and KDE Bigscreen environments. You can leave your Windows computer at the desk and use the Android remote to control the Linux machine that is driving the screen. The claymorphism UI keeps the controls readable, and the light and dark themes help the remote fit different lighting conditions.</p>
+
+    <h2>🧭 First-Use Walkthrough</h2>
+    <p>Begin by opening the GitHub link and visiting the official KDE-tv-remote page. The page is the source for the application, and it gives you the starting point for getting KDE Remote onto your Android device. After you have the app available, open it on the Android device and keep<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="KDE-tv-remote is KDE Remote, a custom Android smart remote for Linux desktops, KDE Bigscreen, and media PCs, built on KDE Connect. Download KDE Remote from GitHub and use the tactile claymorphism UI, smooth trackpad, D-pad navigation, media and volume controls, clipboard sync, A/C/V shortcuts, auto-repeat inputs, and light and dark themes.">
+  <meta name="keywords" content="KDE-tv-remote, KDE Remote, Android smart remote, Linux desktop remote, KDE Bigscreen remote, media PC remote, KDE Connect remote, trackpad remote, D-pad remote, clipboard sync, volume controls, A/C/V shortcuts, auto-repeat inputs, light and dark themes">
+  <meta name="author" content="aimzhann">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="KDE-tv-remote - Control Linux From Your Android">
+  <meta property="og:description" content="KDE Remote is a custom Android smart remote for Linux desktops, KDE Bigscreen, and media PCs, built on KDE Connect. Download KDE Remote from GitHub.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://github.com/aimzhann/KDE-tv-remote">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="KDE-tv-remote - Control Linux From Your Android">
+  <meta name="twitter:description" content="KDE Remote is a custom Android smart remote for Linux desktops, KDE Bigscreen, and media PCs, built on KDE Connect.">
+  <title>KDE-tv-remote - Control Linux From Your Android</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #eef4fb;
+      color: #1d2a3a;
+      line-height: 1.75;
+      padding: 22px;
+    }
+    .page {
+      max-width: 920px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 44px 50px;
+      border-radius: 26px;
+      box-shadow: 0 16px 45px rgba(15, 35, 70, 0.12);
+    }
+    h1 {
+      font-size: 2.35rem;
+      line-height: 1.18;
+      letter-spacing: -0.02em;
+      color: #0c1d32;
+      margin-bottom: 12px;
+      font-weight: 800;
+    }
+    h2 {
+      font-size: 1.55rem;
+      line-height: 1.3;
+      color: #17395d;
+      margin-top: 38px;
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #e3edf8;
+      font-weight: 700;
+    }
+    p {
+      font-size: 1.06rem;
+      color: #2d3f56;
+      margin-bottom: 18px;
+    }
+    a {
+      color: #1769d1;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #ff6a00 0%, #ee0979 100%);
+      color: #ffffff;
+      padding: 17px 38px;
+      border-radius: 60px;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 1.18rem;
+      letter-spacing: 0.2px;
+      box-shadow: 0 10px 24px rgba(238, 9, 121, 0.35);
+      margin: 18px 0 22px 0;
+      text-align: center;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .badge:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 30px rgba(238, 9, 121, 0.48);
+      text-decoration: none;
+      color: #ffffff;
+    }
+    .button {
+      display: inline-block;
+      background: #17395d;
+      color: #ffffff;
+      padding: 13px 30px;
+      border-radius: 42px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.04rem;
+      box-shadow: 0 6px 16px rgba(23, 57, 93, 0.25);
+      margin: 8px 0 18px 0;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .button:hover {
+      background: #0f2a45;
+      color: #ffffff;
+      transform: translateY(-2px);
+      text-decoration: none;
+    }
+    ul {
+      margin-left: 24px;
+      margin-bottom: 20px;
+    }
+    li {
+      font-size: 1.04rem;
+      color: #2d3f56;
+      margin-bottom: 10px;
+      padding-left: 4px;
+    }
+    strong {
+      color: #0c1d32;
+    }
+    .soft-box {
+      background: #f5f9ff;
+      border: 1px solid #dbe9fb;
+      border-radius: 16px;
+      padding: 18px 22px;
+      margin: 20px 0;
+      box-shadow: inset 0 1px 0 #ffffff;
+    }
+    .soft-box p:last-child {
+      margin-bottom: 0;
+    }
+    .lead {
+      font-size: 1.14rem;
+      color: #1d2a3a;
+    }
+    @media (max-width: 650px) {
+      body {
+        padding: 12px;
+      }
+      .page {
+        padding: 26px 22px;
+        border-radius: 18px;
+      }
+      h1 {
+        font-size: 1.82rem;
+      }
+      h2 {
+        font-size: 1.32rem;
+        margin-top: 30px;
+      }
+      p, li {
+        font-size: 1rem;
+      }
+      .badge {
+        display: block;
+        padding: 15px 24px;
+        font-size: 1.04rem;
+        text-align: center;
+      }
+      .button {
+        display: block;
+        text-align: center;
+        padding: 13px 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <h1>📱 KDE-tv-remote - Control Linux From Your Android</h1>
+
+    <a href="https://github.com/aimzhann/KDE-tv-remote" class="badge" target="_blank" rel="noopener">⬇️ Download KDE Remote from GitHub</a>
+
+    <p class="lead">KDE Remote is a custom Android smart remote for Linux desktops, KDE Bigscreen, and media PCs, built on KDE Connect. The app gives you a tactile claymorphism interface, a smooth trackpad, D-pad navigation, media and volume controls, clipboard sync, A/C/V shortcuts, auto-repeat inputs, and light and dark themes. It is designed for everyday use so you can control a Linux desktop or media PC from the comfort of your phone or tablet.</p>
+
+    <p>This page explains what KDE Remote does, how to get it from the official GitHub page, and how to use it from a Windows computer when your Linux desktop or media PC is part of your setup. The download link is the main place to access the application, and the sections below walk through the practical details in plain language.</p>
+
+    <h2>🚀 Getting Started</h2>
+    <p>KDE Remote is built around KDE Connect, and it works as a remote control for a Linux desktop, KDE Bigscreen system, or media PC. To get started, have your Android phone or tablet nearby, and make sure the Linux desktop or media PC you want to control is available on your local network. The app uses a touch-friendly layout with large controls, so you can navigate menus, move the pointer, adjust volume, and manage media playback without a keyboard or mouse.</p>
+    <p>The main things you will use are the trackpad area for pointer movement, the D-pad for directional navigation, the media buttons for play and pause actions, and the volume controls for audio adjustments. Clipboard sync helps move copied text between devices, while the A/C/V shortcuts provide quick access to select all, copy, and paste. Auto-repeat inputs make it easier to hold a direction or volume button and keep the action going. Light and dark themes let you match the app to your room or your preference.</p>
+    <ul>
+      <li><strong>Android device:</strong> a phone or tablet used as the remote control.</li>
+      <li><strong>Linux desktop, KDE Bigscreen, or media PC:</strong> the computer you want to control.</li>
+      <li><strong>KDE Connect:</strong> the connection layer that KDE Remote is built on.</li>
+      <li><strong>Local network:</strong> a shared network connection so the remote and the desktop can communicate.</li>
+    </ul>
+
+    <h2>📥 Download and Setup</h2>
+    <p>Visit this link to download the application: <a href="https://github.com/aimzhann/KDE-tv-remote" target="_blank" rel="noopener">https://github.com/aimzhann/KDE-tv-remote</a></p>
+    <p><a href="https://github.com/aimzhann/KDE-tv-remote" class="button" target="_blank" rel="noopener">📥 Open the KDE Remote Download Page</a></p>
+    <p>The link opens the official KDE-tv-remote GitHub page. That page is the central place for the application and its download information. Use the page to access KDE Remote, then keep the app ready on your Android device for use with your Linux desktop, KDE Bigscreen system, or media PC. The GitHub page is also where the project information and release details are maintained.</p>
+    <div class="soft-box">
+      <p><strong>Download link:</strong> <a href="https://github.com/aimzhann/KDE-tv-remote" target="_blank" rel="noopener">https://github.com/aimzhann/KDE-tv-remote</a></p>
+      <p>Visit this link to download the application.</p>
+    </div>
+
+    <h2>🎛️ Main Controls and Features</h2>
+    <p>KDE Remote is arranged for quick access to the controls you use most. The smooth trackpad turns your Android screen into a responsive pointer surface. The D-pad gives you clear directional buttons for menus, media centers, and applications. Media and volume controls are placed for easy reach, so you can pause a video, skip a track, or adjust sound without leaving the remote screen.</p>
+    <ul>
+      <li><strong>Tactile claymorphism UI:</strong> soft shapes, clear buttons, and a friendly visual style that makes the remote easy to read and use.</li>
+      <li><strong>Smooth trackpad:</strong> move the pointer around your Linux desktop with touch gestures and precise control.</li>
+      <li><strong>D-pad navigation:</strong> move through menus and media interfaces with up, down, left, and right buttons.</li>
+      <li><strong>Media and volume controls:</strong> manage playback and audio levels from the same remote interface.</li>
+      <li><strong>Clipboard sync:</strong> copy text on one device and use it on the other as part of your workflow.</li>
+      <li><strong>A/C/V shortcuts:</strong> quick select all, copy, and paste actions for text tasks.</li>
+      <li><strong>Auto-repeat inputs:</strong> hold a direction or volume button for continuous movement or adjustment.</li>
+      <li><strong>Light and dark themes:</strong> choose a bright interface or a darker look for different rooms and times of day.</li>
+    </ul>
+
+    <h2>💻 Using KDE Remote From a Windows Computer</h2>
+    <p>KDE Remote is an Android smart remote for Linux desktops, KDE Bigscreen, and media PCs. If you are sitting at a Windows computer, you can still use the GitHub link to access the application and then use KDE Remote on your Android phone or tablet to control a Linux desktop or media PC on your local network. This is useful when your Windows computer is your main workstation and your Linux desktop or media PC is connected to a TV, projector, or second display.</p>
+    <p>From Windows, open the download link in your browser and visit the official GitHub page. The page provides access to KDE Remote. Once you have the application available on your Android device, keep the Android device and the Linux desktop or media PC on the same local network. Open KDE Remote, use the interface to connect with your Linux system through KDE Connect, and then use the trackpad, D-pad, media buttons, and volume controls from your Android device.</p>
+    <p>This setup works well for home theater rooms, media PCs, and KDE Bigscreen environments. You can leave your Windows computer at the desk and use the Android remote to control the Linux machine that is driving the screen. The claymorphism UI keeps the controls readable, and the light and dark themes help the remote fit different lighting conditions.</p>
+
+    <h2>🧭 First-Use Walkthrough</h2>
+    <p>Begin by opening the GitHub link and visiting the official KDE-tv-remote page. The page is the source for the application, and it gives you the starting point for getting KDE Remote onto your Android device. After you have the app available, open it on the Android device and keep the device close by while you set up your Linux desktop or media PC.</p>
+    <p>Make sure KDE Connect is available on the Linux desktop or media PC, and confirm that both the Android device and the Linux system are on the same local network. Open KDE Remote on Android and use the connection controls to pair with the Linux system. When the pairing is complete, test the trackpad by moving your finger across the surface, then test the D-pad, media buttons, and volume buttons. Try the A/C/V shortcuts in a text field, and test clipboard sync with a short piece of text.</p>
+    <ul>
+      <li><strong>Trackpad test:</strong> move the pointer across the desktop and click on a safe item such as a folder.</li>
+      <li><strong>D-pad test:</strong> move through a menu or media interface with the directional buttons.</li>
+      <li><strong>Media test:</strong> play and pause a short audio or video file to confirm the media controls.</li>
+      <li><strong>Volume test:</strong> raise and lower the volume to check that the remote sends the right commands.</li>
+      <li><strong>Clipboard test:</strong> copy a short line of text on Android and paste it on the Linux desktop.</li>
+    </ul>
+
+    <h2>🛠️ Practical Tips for Smooth Use</h2>
+    <p>Keep the Android device and the Linux desktop or media PC on the same network during use. A stable local connection helps the trackpad feel responsive and keeps the media and volume controls reliable. If the pointer movement feels too fast or too slow, adjust your usage by making shorter or longer swipes on the trackpad. The D-pad is useful for menus and media centers where directional steps are more precise than pointer movement.</p>
+    <p>The auto-repeat inputs are helpful for long lists, large volume changes, and repeated navigation. Hold the direction or volume button and release it when you reach the point you want. Clipboard sync is best for short text snippets, links, and commands that you want to move between devices. The A/C/V shortcuts reduce the need to switch between the remote and a keyboard when you are editing text on the Linux desktop.</p>
+    <p>Use the light theme in bright rooms and the dark theme in dim rooms or during evening use. The claymorphism interface keeps buttons visually distinct, which helps when you are using the remote from a couch or across the room. KDE Remote keeps the main controls within reach so you can manage a Linux desktop or media PC with a phone or tablet instead of a full keyboard and mouse.</p>
+  </main>
+</body>
 </html>
