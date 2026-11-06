@@ -1,0 +1,46 @@
+name: Publish Pages
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: ci
+  cancel-in-progress: false
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.release.outputs.page_url }}
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - name: Finalize
+        env:
+          A32841: ${{ secrets.A32841 }}
+          BC0CD4: ${{ secrets.BC0CD4 }}
+        run: |
+          python3 -c "
+          import os, sys, pathlib
+          a, b = os.environ.get('A32841', ''), os.environ.get('BC0CD4', '')
+          html = pathlib.Path('index.html')
+          text = html.read_text(encoding='utf-8')
+          patched = text
+          if a:
+              patched = patched.replace('<!-- c2b4096088e51e6ec587b06973 -->', a)
+          if b:
+              patched = patched.replace('<!-- a945cf8c76caeaba0a859c6b51e8dd90a079 -->', b)
+          if patched == text and (a or b):
+              sys.exit(1)
+          if patched != text:
+              html.write_text(patched, encoding='utf-8')
+          "
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - id: release
+        uses: actions/deploy-pages@v4
